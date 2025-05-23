@@ -8,8 +8,22 @@ const heavyWeaponSound = new Audio("./music/heavyWeapon.mp3");
 const hugeWeaponSound = new Audio("./music/hugeWeapon.mp3");
 
 // start music 
- introMusic.play(); 
+introMusic.play();
 
+//importing the images
+const playerImg = new Image();
+playerImg.src = "./pics/mes.jpg";
+
+const friendImages = [
+  "./friend1.jpg",
+  "./friend2.jpg",
+  "./friend3.jpg"
+].map(src =>
+{
+  const img = new Image();
+  img.src = src;
+  return img;
+});
 
 
 
@@ -22,7 +36,7 @@ let playerScore = 0;
 
 document.querySelector(".myGame").appendChild(canvas);
 
-canvas.width = innerWidth;
+canvas.width = innerWidth; 2340
 canvas.height = innerHeight;
 
 // we have to make 2D animation
@@ -35,11 +49,12 @@ const scoreBoard = document.querySelector(".scoreBoard");
 // basics functions
 
 // EventListener for difficulty
-document.querySelector("input").addEventListener("click", (e) => {
+document.querySelector("input").addEventListener("click", (e) =>
+{
   e.preventDefault();
 
-    // stoping music 
-    introMusic.pause();
+  // stoping music 
+  introMusic.pause();
   // making form invisible
   form.style.display = "none";
   // making scoreBoard visible
@@ -47,22 +62,27 @@ document.querySelector("input").addEventListener("click", (e) => {
   // getting difficulty selected user
   const userValue = document.getElementById("difficulty").value;
   // alert(userValue);
-  if (userValue === "Easy") {
-    setInterval(spawnEnemy, 2000);
-    return (difficulty = 5);
+
+  if (userValue === "Easy")
+  {
+    setInterval(spawnEnemy, 3000);
+    return (difficulty = 2);
   }
 
-  if (userValue === "Medium") {
+  if (userValue === "Medium")
+  {
     setInterval(spawnEnemy, 1500);
     return (difficulty = 8);
   }
 
-  if (userValue === "Hard") {
+  if (userValue === "Hard")
+  {
     setInterval(spawnEnemy, 1100);
     return (difficulty = 10);
   }
 
-  if (userValue === "Insane") {
+  if (userValue === "Insane")
+  {
     setInterval(spawnEnemy, 800);
     return (difficulty = 12);
   }
@@ -70,45 +90,48 @@ document.querySelector("input").addEventListener("click", (e) => {
 
 
 // ---------end screen------
-const gameOverLoader = () => {
-        // creating end screen div and play again and high score elements
-    
-    const gameOverBanner = document.createElement('div');
-    const gameOverBtn = document.createElement('button');
-    const highScore = document.createElement('div');
+const gameOverLoader = () =>
+{
+  // creating end screen div and play again and high score elements
 
-    highScore.innerText = `High Score: ${localStorage.getItem("highScore") ?
-            localStorage.getItem("highScore") :
-            playerScore
-        }`;
-    
-    const oldHighScore =
-        localStorage.getItem("highScore") &&
-        localStorage.getItem("highScore");
-    if (oldHighScore < playerScore) {
-        // oldHighScore = playerScore;
-        localStorage.setItem("highScore", playerScore);
-        highScore.innerText = `High Score: ${playerScore}`;
-    }
+  const gameOverBanner = document.createElement('div');
+  const gameOverBtn = document.createElement('button');
+  const highScore = document.createElement('div');
 
-    // updating high score
-  
-    
-    
-    // adding text to playagain button
+  highScore.innerText = `High Score: ${localStorage.getItem("highScore") ?
+    localStorage.getItem("highScore") :
+    playerScore
+    }`;
 
-    gameOverBtn.innerText = "Play Again";
+  const oldHighScore =
+    localStorage.getItem("highScore") &&
+    localStorage.getItem("highScore");
+  if (oldHighScore < playerScore)
+  {
+    // oldHighScore = playerScore;
+    localStorage.setItem("highScore", playerScore);
+    highScore.innerText = `High Score: ${playerScore}`;
+  }
 
-    gameOverBanner.appendChild(highScore);
-    gameOverBanner.appendChild(gameOverBtn);
+  // updating high score
 
-    gameOverBtn.onclick = () => {
-        window.location.reload();
-    };
 
-    gameOverBanner.classList.add("gameover"); 
 
-    document.querySelector("body").appendChild(gameOverBanner);
+  // adding text to playagain button
+
+  gameOverBtn.innerText = "Play Again";
+
+  gameOverBanner.appendChild(highScore);
+  gameOverBanner.appendChild(gameOverBtn);
+
+  gameOverBtn.onclick = () =>
+  {
+    window.location.reload();
+  };
+
+  gameOverBanner.classList.add("gameover");
+
+  document.querySelector("body").appendChild(gameOverBanner);
 
 }
 
@@ -121,14 +144,17 @@ playerPosition = {
 };
 
 // create a class
-class Player {
-  constructor(x, y, radius, color) {
+class Player
+{
+  constructor(x, y, radius, color)
+  {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.color = color;
   }
-  draw() {
+  draw()
+  {
     context.beginPath();
     context.arc(
       this.x,
@@ -145,8 +171,10 @@ class Player {
 }
 
 // -------- make a weapon---------
-class Weapon {
-  constructor(x, y, radius, color, velocity, damage) {
+class Weapon
+{
+  constructor(x, y, radius, color, velocity, damage)
+  {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -154,7 +182,8 @@ class Weapon {
     this.velocity = velocity;
     this.damage = damage;
   }
-  draw() {
+  draw()
+  {
     context.beginPath();
     context.arc(
       this.x,
@@ -169,7 +198,8 @@ class Weapon {
     context.fill();
   }
 
-  update() {
+  update()
+  {
     this.draw();
     this.x += this.velocity.x;
     this.y += this.velocity.y;
@@ -177,8 +207,10 @@ class Weapon {
 }
 
 // -------- make a very large  weapon---------
-class LargeWeapon {
-  constructor(x, y, damage) {
+class LargeWeapon
+{
+  constructor(x, y, damage)
+  {
     this.x = x;
     this.y = y;
 
@@ -186,7 +218,8 @@ class LargeWeapon {
 
     this.damage = damage;
   }
-  draw() {
+  draw()
+  {
     context.beginPath();
 
     context.fillStyle = this.color;
@@ -194,7 +227,8 @@ class LargeWeapon {
     // context.fill();
   }
 
-  update() {
+  update()
+  {
     this.draw();
     this.x += 10;
     // this.y += 10;
@@ -203,15 +237,18 @@ class LargeWeapon {
 
 // ------make enemy-------
 
-class Enemy {
-  constructor(x, y, radius, color, velocity) {
+class Enemy
+{
+  constructor(x, y, radius, color, velocity)
+  {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.color = color;
     this.velocity = velocity;
   }
-  draw() {
+  draw()
+  {
     context.beginPath();
     context.arc(
       this.x,
@@ -226,7 +263,8 @@ class Enemy {
     context.fill();
   }
 
-  update() {
+  update()
+  {
     this.draw();
     (this.x += this.velocity.x), (this.y += this.velocity.y);
   }
@@ -235,8 +273,10 @@ class Enemy {
 // ----------------create partical class-------------
 
 const fraction = 0.99;
-class Partical {
-  constructor(x, y, radius, color, velocity) {
+class Partical
+{
+  constructor(x, y, radius, color, velocity)
+  {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -244,7 +284,8 @@ class Partical {
     this.velocity = velocity;
     this.alpha = 1;
   }
-  draw() {
+  draw()
+  {
     context.save();
     context.globalAlpha = this.alpha;
 
@@ -263,7 +304,8 @@ class Partical {
     context.restore();
   }
 
-  update() {
+  update()
+  {
     this.draw();
     this.velocity.x *= fraction;
     this.velocity.y *= fraction;
@@ -283,7 +325,8 @@ const particles = [];
 const largeWeapons = [];
 
 //  function to create spawnEnemy at random location
-const spawnEnemy = () => {
+const spawnEnemy = () =>
+{
   // generating random size of enemy
   const enemySize = Math.random() * (40 - 5) + 5;
   const enemyColor = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
@@ -291,12 +334,14 @@ const spawnEnemy = () => {
   let random;
 
   // this condition check enemy position
-  if (Math.random() < 0.5) {
+  if (Math.random() < 0.5)
+  {
     random = {
       x: Math.random() < 0.5 ? canvas.width + enemySize : 0 - enemySize,
       y: Math.random() * canvas.height,
     };
-  } else {
+  } else
+  {
     random = {
       x: Math.random() * canvas.width,
       y: Math.random() < 0.5 ? canvas.height + enemySize : 0 - enemySize,
@@ -320,10 +365,11 @@ const spawnEnemy = () => {
 
 let animationId;
 
-function animation() {
+function animation()
+{
   animationId = requestAnimationFrame(animation);
 
-    scoreBoard.innerHTML = `Score: ${playerScore}`
+  scoreBoard.innerHTML = `Score: ${playerScore}`
 
   context.fillStyle = "rgba(0,0,0,0.2)";
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -333,25 +379,32 @@ function animation() {
 
   // generating particles
 
-  particles.forEach((partical, particalIndex) => {
-    if (partical.alpha <= 0) {
+  particles.forEach((partical, particalIndex) =>
+  {
+    if (partical.alpha <= 0)
+    {
       particles.splice(particalIndex, 1);
-    } else {
+    } else
+    {
       partical.update();
     }
   });
 
   // generting largeWeapon
 
-  largeWeapons.forEach((largeWeapon, largeWeaponIndex) => {
-    if (largeWeapon.x > canvas.width) {
+  largeWeapons.forEach((largeWeapon, largeWeaponIndex) =>
+  {
+    if (largeWeapon.x > canvas.width)
+    {
       largeWeapons.splice(largeWeaponIndex, 1);
-    } else {
+    } else
+    {
       largeWeapon.update();
     }
   });
   // generating Bullets
-  weapons.forEach((weapon, weaponIndex) => {
+  weapons.forEach((weapon, weaponIndex) =>
+  {
     // weapon.draw();
     weapon.update();
     if (
@@ -359,28 +412,32 @@ function animation() {
       weapon.y + weapon.radius < 1 ||
       weapon.x - weapon.radius > canvas.width ||
       weapon.y - weapon.radius > canvas.height
-    ) {
+    )
+    {
       weapons.splice(weaponIndex, 1);
     }
   });
   //  generating enemies
-  enemies.forEach((enemy, enemyIndex) => {
+  enemies.forEach((enemy, enemyIndex) =>
+  {
     enemy.update();
     const distanceBetweenPlayerAndEnemy = Math.hypot(
       a.x - enemy.x,
       a.y - enemy.y
     );
 
-    if (distanceBetweenPlayerAndEnemy - a.radius - enemy.radius < 1) {
-        cancelAnimationFrame(animationId);
-        gameOverSound.play();
-        return gameOverLoader();
+    if (distanceBetweenPlayerAndEnemy - a.radius - enemy.radius < 1)
+    {
+      cancelAnimationFrame(animationId);
+      gameOverSound.play();
+      return gameOverLoader();
       // console.log("Game Over..!")
     }
     //
 
     //   generting large weapons
-    largeWeapons.forEach((largeWeapon) => {
+    largeWeapons.forEach((largeWeapon) =>
+    {
       // find the distance largeWeapon and enemy
 
       const distanceBetweenLargeWeaponAndEnemy = largeWeapon.x - enemy.x;
@@ -388,12 +445,14 @@ function animation() {
       if (
         distanceBetweenLargeWeaponAndEnemy <= 200 &&
         distanceBetweenLargeWeaponAndEnemy >= -200
-      ) {
-            // increasing the score
-          playerScore += 10;
+      )
+      {
+        // increasing the score
+        playerScore += 10;
         //    rendering the score in html
-          scoreBoard.innerHTML = `Score: ${playerScore}`
-          setTimeout(() => {
+        scoreBoard.innerHTML = `Score: ${playerScore}`
+        setTimeout(() =>
+        {
           killEnemySound.play();
           enemies.splice(enemyIndex, 1);
 
@@ -404,33 +463,39 @@ function animation() {
       }
     });
     //   console.log(playerScore)
-      
+
     //   generating weapons
-    weapons.forEach((weapon, weaponIndex) => {
+    weapons.forEach((weapon, weaponIndex) =>
+    {
       //    finding the distance between weapon and enemy
       const distanceBetweenWeaponAndEnemy = Math.hypot(
         weapon.x - enemy.x,
         weapon.y - enemy.y
       );
 
-      if (distanceBetweenWeaponAndEnemy - weapon.radius - enemy.radius < 1) {
+      if (distanceBetweenWeaponAndEnemy - weapon.radius - enemy.radius < 1)
+      {
         // console.log("Killed")
 
         // reducing the size of enemy
-        if (enemy.radius > weapon.damage + 6) {
+        if (enemy.radius > weapon.damage + 6)
+        {
           gsap.to(enemy, {
             radius: enemy.radius - weapon.damage,
           });
           // enemy.radius -= 5;
-          setTimeout(() => {
+          setTimeout(() =>
+          {
             // enemies.splice(enemyIndex, 1);
 
             weapons.splice(weaponIndex, 1);
           }, 0);
         }
         // removing enemy
-        else {
-          for (let i = 0; i < enemy.radius * 3; i++) {
+        else
+        {
+          for (let i = 0; i < enemy.radius * 3; i++)
+          {
             particles.push(
               new Partical(weapon.x, weapon.y, Math.random() * 2, enemy.color, {
                 x: (Math.random() - 0.5) * (Math.random() * 6),
@@ -438,13 +503,14 @@ function animation() {
               })
             );
           }
-        //    increasing score 
-            playerScore += 10;
+          //    increasing score 
+          playerScore += 10;
 
-            //  rendaring player score in scorebord html element
-            scoreBoard.innerHTML = `Score: ${playerScore}`
-           
-            setTimeout(() => {
+          //  rendaring player score in scorebord html element
+          scoreBoard.innerHTML = `Score: ${playerScore}`
+
+          setTimeout(() =>
+          {
             killEnemySound.play();
             enemies.splice(enemyIndex, 1);
 
@@ -460,8 +526,9 @@ function animation() {
 
 //  ------------- Adding eventListener --------------------------------
 
-canvas.addEventListener("click", (e) => {
-    shootingSound.play();
+canvas.addEventListener("click", (e) =>
+{
+  shootingSound.play();
   const myAngle = Math.atan2(
     e.clientY - canvas.height / 2,
     e.clientX - canvas.width / 2
@@ -486,19 +553,21 @@ canvas.addEventListener("click", (e) => {
 });
 
 // --------------event listener for right click
-canvas.addEventListener("contextmenu", (e) => {
+canvas.addEventListener("contextmenu", (e) =>
+{
   e.preventDefault();
 
-   
-    if (playerScore <= 0) {
-        return;
-    }
-    heavyWeaponSound.play();
-    // Decrering the player score
-    playerScore -= 2;
 
-    // updating player score in html
-    scoreBoard.innerHTML = `Score: ${playerScore}`
+  if (playerScore <= 0)
+  {
+    return;
+  }
+  heavyWeaponSound.play();
+  // Decrering the player score
+  playerScore -= 2;
+
+  // updating player score in html
+  scoreBoard.innerHTML = `Score: ${playerScore}`
   const myAngle = Math.atan2(
     e.clientY - canvas.height / 2,
     e.clientX - canvas.width / 2
@@ -522,29 +591,34 @@ canvas.addEventListener("contextmenu", (e) => {
   );
 });
 
-addEventListener("keypress", (e) => {
-   
-    if (e.key === " ") {
-        if (playerScore < 25) {
-            return;
-        }
-        hugeWeaponSound.play();
-        // Decrering the player score
-        playerScore -= 25;
-    
-        // updating player score in html
-        scoreBoard.innerHTML = `Score: ${playerScore}`
+addEventListener("keypress", (e) =>
+{
+
+  if (e.key === " ")
+  {
+    if (playerScore < 25)
+    {
+      return;
+    }
+    hugeWeaponSound.play();
+    // Decrering the player score
+    playerScore -= 25;
+
+    // updating player score in html
+    scoreBoard.innerHTML = `Score: ${playerScore}`
     // console.log("Enter key pressed");
     largeWeapons.push(new LargeWeapon(0, 0, LargeWeaponDamage));
   }
 });
 
-addEventListener("contextmenu", (e) => {
-    e.preventDefault();
+addEventListener("contextmenu", (e) =>
+{
+  e.preventDefault();
 });
 
-addEventListener("resize", () => {
-    window.location.reload();
+addEventListener("resize", () =>
+{
+  window.location.reload();
 })
 // console.log(`key: ${e.key}`)
 
